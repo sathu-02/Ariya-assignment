@@ -1,4 +1,4 @@
-import { PieChart, Pie, Cell, ResponsiveContainer, RadialBarChart, RadialBar, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer, RadialBarChart, RadialBar } from "recharts";
 
 const COLORS = {
   indigo: "#818cf8",
