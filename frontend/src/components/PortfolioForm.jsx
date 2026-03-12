@@ -99,8 +99,8 @@ function PortfolioForm({ onAnalyze }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!fileObj && !cvText.trim()) {
-      alert("Please provide your CV by uploading a file or pasting the text.");
+    if (!fileObj) {
+      alert("Please upload your resume (PDF or DOCX).");
       return;
     }
     if (!experienceLevel) {
@@ -174,20 +174,6 @@ function PortfolioForm({ onAnalyze }) {
               </button>
             </div>
           )}
-
-          {/* Textarea Fallback */}
-          <div className="relative">
-            <label className="text-xs text-gray-500 mb-1 block">
-              {fileName ? "Extracted Text Preview (Edit if needed)" : "Or paste your resume text manually"}
-            </label>
-            <textarea
-              value={cvText}
-              onChange={(e) => setCvText(e.target.value)}
-              placeholder="Paste your resume or CV text here..."
-              rows={fileName ? 4 : 8}
-              className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-sm text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-y"
-            />
-          </div>
         </div>
 
         {/* Experience Level + GitHub URL - Side by Side */}
