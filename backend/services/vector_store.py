@@ -23,7 +23,8 @@ class VectorStore:
         # Qdrant client
         self.client = QdrantClient(
             url=settings.QDRANT_URL,
-            api_key=settings.QDRANT_API_KEY
+            api_key=settings.QDRANT_API_KEY,
+            check_compatibility=False
         )
 
         # OpenAI client
@@ -101,17 +102,33 @@ class VectorStore:
 
     def search(self, query: str, limit: int = 3) -> List[str]:
 
-        vector = self.embed(query)
+        try:
+            vector = self.embed(query)
 
-        results = self.client.search(
-            collection_name=self.collection_name,
-            query_vector=vector,
-            limit=limit
-        )
+            # Try new API first (qdrant-client >= 1.12)
+            if hasattr(self.client, 'query_points'):
+                from qdrant_client.models import models
+                results = self.client.query_points(
+                    collection_name=self.collection_name,
+                    query=vector,
+                    limit=limit,
+                )
+                docs = []
+                for r in results.points:
+                    docs.append(r.payload["text"])
+                return docs
+            else:
+                # Fallback for older qdrant-client
+                results = self.client.search(
+                    collection_name=self.collection_name,
+                    query_vector=vector,
+                    limit=limit
+                )
+                docs = []
+                for r in results:
+                    docs.append(r.payload["text"])
+                return docs
 
-        docs = []
-
-        for r in results:
-            docs.append(r.payload["text"])
-
-        return docs
+        except Exception as e:
+            print(f"Vector search failed: {e}")
+            return []
