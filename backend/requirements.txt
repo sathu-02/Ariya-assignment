@@ -1,0 +1,13 @@
+fastapi
+uvicorn[standard]
+langchain
+langgraph
+openai
+python-dotenv
+pydantic
+requests
+qdrant-client
+tiktoken
+python-multipart
+PyMuPDF
+python-docx
