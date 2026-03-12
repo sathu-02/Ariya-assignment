@@ -103,6 +103,18 @@ function PortfolioForm({ onAnalyze }) {
       alert("Please provide your CV by uploading a file or pasting the text.");
       return;
     }
+    if (!experienceLevel) {
+      alert("Please select your experience level.");
+      return;
+    }
+    if (!githubUrl.trim()) {
+      alert("Please provide your GitHub profile URL.");
+      return;
+    }
+    if (targetRoles.length === 0) {
+      alert("Please add at least one target job title.");
+      return;
+    }
 
     onAnalyze(cvText, githubUrl, fileObj, experienceLevel, targetRoles);
   };
@@ -115,6 +127,7 @@ function PortfolioForm({ onAnalyze }) {
           <label className="flex items-center gap-2 text-sm font-medium text-gray-300 mb-2">
             <FileText size={16} />
             CV / Resume
+            <span className="text-red-500">*</span>
           </label>
           
           {/* File Upload Area */}
@@ -184,6 +197,7 @@ function PortfolioForm({ onAnalyze }) {
             <label className="flex items-center gap-2 text-sm font-medium text-gray-300 mb-2">
               <Clock size={16} />
               Experience Level
+              <span className="text-red-500">*</span>
             </label>
             <select
               value={experienceLevel}
@@ -202,6 +216,7 @@ function PortfolioForm({ onAnalyze }) {
             <label className="flex items-center gap-2 text-sm font-medium text-gray-300 mb-2">
               <Github size={16} />
               GitHub Profile URL
+              <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -218,6 +233,7 @@ function PortfolioForm({ onAnalyze }) {
           <label className="flex items-center gap-2 text-sm font-medium text-gray-300 mb-2">
             <Briefcase size={16} />
             Target Job Titles
+            <span className="text-red-500">*</span>
             <span className="text-xs text-gray-500 font-normal ml-1">
               ({targetRoles.length}/5)
             </span>
